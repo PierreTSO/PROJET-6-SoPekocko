@@ -1,5 +1,5 @@
 const Sauce = require('../models/Sauce');
-// const fs = require('fs');
+const fs = require('fs');
 
 exports.createSauce = (req, res, next) => {
     // On stocke les données envoyées par le front-end sous forme de form-data dans une variable en les transformant en objet js
