@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
+const helmet = require('helmet');
+
 
 
 const path = require('path');
@@ -21,7 +23,9 @@ mongoose.connect(process.env.MONGODB_URI,
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 
-  const app = express();
+const app = express();
+
+app.use(helmet());
 
 
 app.use((req, res, next) => {

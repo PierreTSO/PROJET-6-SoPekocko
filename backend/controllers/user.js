@@ -6,12 +6,11 @@ const cryptojs = require('crypto-js')
 //Compte : pierre... mdp 12345
 
 exports.signup = (req, res, next) => {
-    var encryptedEmail = cryptojs.AES.encrypt(req.body.email, 'Secret 123');
     //Hashage du MDP
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({
-                email: encryptedEmail,
+                email: req.body.email,
                 password: hash
             });
             //Enregistrement dans la BDD
