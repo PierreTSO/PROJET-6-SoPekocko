@@ -5,7 +5,12 @@ const dotenv = require('dotenv').config();
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
+const rateLimit = require('express-rate-limit');
 
+const limiter = rateLimit({         
+  windowMs: 15 * 60 * 1000,       // = 15 minutes
+  max: 100
+})
 
 
 const path = require('path');
@@ -26,6 +31,8 @@ mongoose.connect(process.env.MONGODB_URI,
 
 
 const app = express();
+
+app.use(limiter);
 
 app.use(helmet());
 
