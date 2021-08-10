@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
 const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
 
 
 
@@ -36,6 +38,14 @@ app.use((req, res, next) => {
   });
 
 app.use(bodyParser.json());
+
+//Protection des données contre l'injection SQL dans les inputs
+app.use(mongoSanitize({
+  replaceWith: '_'
+}))
+
+//Protection des données via une attaque XSS
+app.use(xss());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
