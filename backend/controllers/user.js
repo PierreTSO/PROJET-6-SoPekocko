@@ -6,11 +6,15 @@ const cryptojs = require('crypto-js')
 //Compte : pierre... mdp 12345
 
 exports.signup = (req, res, next) => {
+    var encryptedEmail = cryptojs.HmacSHA256(req.body.email, process.env.EMAIL_ENCRYPTION_KEY).toString();
+    console.log(encryptedEmail);
+    console.log(req.body.email);
+    console.log(process.env.EMAIL_ENCRYPTION_KEY);
     //Hashage du MDP
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({
-                email: req.body.email,
+                email: encryptedEmail,
                 password: hash
             });
             //Enregistrement dans la BDD
@@ -22,8 +26,12 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
+    var encryptedEmail = cryptojs.HmacSHA256(req.body.email, process.env.EMAIL_ENCRYPTION_KEY).toString();
+    console.log(encryptedEmail);
+    console.log(req.body.email);
+    console.log(process.env.EMAIL_ENCRYPTION_KEY);
     //Méthode findOne pour trouver un seul utilisateur de la BDD
-    User.findOne({ email: req.body.email})
+    User.findOne({ email: encryptedEmail})
         .then(user => {
             if(!user){
                 return res.status(401).json({error: 'Utilisateur non trouvé !'})
