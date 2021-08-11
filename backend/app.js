@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
-const xss = require('xss-clean');
 const rateLimit = require('express-rate-limit');
+const xssFilters = require('xss-filters');
 
 const limiter = rateLimit({         
   windowMs: 15 * 60 * 1000,       // = 15 minutes
@@ -52,7 +52,7 @@ app.use(mongoSanitize({
 }))
 
 //Protection des données via une attaque XSS
-app.use(xss());
+
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
