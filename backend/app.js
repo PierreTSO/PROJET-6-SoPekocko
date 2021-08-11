@@ -6,6 +6,9 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const rateLimit = require('express-rate-limit');
 const xssFilters = require('xss-filters');
+var xss = require("xss");
+var html = xss('<script>alert("xss");</script>');
+console.log(html);
 
 const limiter = rateLimit({         
   windowMs: 15 * 60 * 1000,       // = 15 minutes
