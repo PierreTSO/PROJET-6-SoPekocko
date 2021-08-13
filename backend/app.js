@@ -78,8 +78,17 @@ app.use((req, res, next) => {
     next();
 });
 
+// Parsing des requêtes
+app.use(bodyParser.urlencoded({extended: true}));
 // Parsing de toutes les requêtes entrantes
 app.use(bodyParser.json());
+
+// Utilisation de cette méthode pour le parsage des requêtes puisque express est en version 4.17
+// Cela engendre une dépreciation de BodyParser
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
 
   //Protection des données contre l'injection SQL dans les inputs
 app.use(mongoSanitize({

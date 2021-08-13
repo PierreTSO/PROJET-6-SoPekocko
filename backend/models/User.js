@@ -7,8 +7,15 @@ const uniqueValidator = require('mongoose-unique-validator');
 //2 utilisateurs locopeio.. pierre.fournier.. mdp : 12345
 
 const userSchema = mongoose.Schema({
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    password: {
+        type: String,
+        required: true
+    }
 });
 
 //Pour ne pas avoir plusieurs utilisateurs avec la même adresse mail

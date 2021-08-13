@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const sauceCtrl = require('../controllers/sauce');
-//auth sera à ajouter au routes pour les protéger
+
+// Importation auth pour la gestion des tokens et des sessions d'utilisation
 const auth = require('../middleware/auth');
+// Importation multer pour la gestion des fichiers
 const multer = require('../middleware/multer-config');
 
 router.post('/', auth, multer, sauceCtrl.createSauce);
